@@ -2,7 +2,7 @@ import os
 import sys
 from dotenv import load_dotenv
 from easyfuncs import download_from_url
- 
+
 now_dir = os.getcwd()
 sys.path.append(now_dir)
 load_dotenv()
@@ -1106,25 +1106,35 @@ with gr.Blocks(theme="ParityError/Interstellar", title="RVC WebUI") as app:
                     fn=vc.get_vc,
                     inputs=[sid0, protect0, protect1],
                     outputs=[spk_item, protect0, protect1, file_index2, file_index4],
-                    api_name="infer_change_voice", 
+                    api_name="infer_change_voice",
                 )
         with gr.TabItem("Download Models"):
             with gr.Row():
-                url_input = gr.Textbox(label="URL to model", value="",placeholder="https://...", scale=6)
-                name_output = gr.Textbox(label="Save as", value="",placeholder="MyModel",scale=2)
-                url_download = gr.Button(value="Download Model",scale=2)
+                url_input = gr.Textbox(
+                    label="URL to model", value="", placeholder="https://...", scale=6
+                )
+                name_output = gr.Textbox(
+                    label="Save as", value="", placeholder="MyModel", scale=2
+                )
+                url_download = gr.Button(value="Download Model", scale=2)
                 url_download.click(
-                    inputs=[url_input,name_output],
+                    inputs=[url_input, name_output],
                     outputs=[url_input],
                     fn=download_from_url,
                 )
             with gr.Row():
-                model_browser = gr.Dropdown(choices=list(model_library.models.keys()),label="OR Search Models (Quality UNKNOWN)",scale=5)
-                download_from_browser = gr.Button(value="Get",scale=2)
+                model_browser = gr.Dropdown(
+                    choices=list(model_library.models.keys()),
+                    label="OR Search Models (Quality UNKNOWN)",
+                    scale=5,
+                )
+                download_from_browser = gr.Button(value="Get", scale=2)
                 download_from_browser.click(
                     inputs=[model_browser],
                     outputs=[model_browser],
-                    fn=lambda model: download_from_url(model_library.models[model],model),
+                    fn=lambda model: download_from_url(
+                        model_library.models[model], model
+                    ),
                 )
         tab_faq = i18n("常见问题解答")
         with gr.TabItem(tab_faq):
